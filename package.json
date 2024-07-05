@@ -1,6 +1,6 @@
 {
   "name": "cor-ts",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CoR is a simple TypeScript implementation of chain of responsability design pattern",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
