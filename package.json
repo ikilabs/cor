@@ -1,5 +1,5 @@
 {
-  "name": "cor",
+  "name": "cor-ts",
   "version": "1.0.0",
   "description": "CoR is a simple TypeScript implementation of chain of responsability design pattern",
   "main": "dist/index.js",
