@@ -1,0 +1,23 @@
+{
+  "name": "cor",
+  "version": "1.0.0",
+  "description": "CoR is a simple TypeScript implementation of chain of responsability design pattern",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikilabs/cor.git"
+  },
+  "author": "Alejandro Narancio (IKI Labs)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ikilabs/cor/issues"
+  },
+  "homepage": "https://github.com/ikilabs/cor#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  }
+}
