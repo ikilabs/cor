@@ -1,8 +1,9 @@
 {
   "name": "cor-ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CoR is a simple TypeScript implementation of chain of responsability design pattern",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rimraf ./dist",
     "build": "npm run clean && tsc",
