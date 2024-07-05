@@ -8,16 +8,14 @@ export class CoR {
         this.rules.push(rule);
     }
 
-    public execute(object: any): boolean {
+    public execute(object: any): any {
         for (const rule of this.rules) {
             if (!rule.validate(object)) {
                 throw new Error(`Validation failed for rule ${rule.getId()} - ${rule.getName()}`);
             }
-            if (!rule.process(object)) {
-                throw new Error(`Processing failed for rule ${rule.getId()} - ${rule.getName()}`);
-            }
+            object = rule.process(object);
         }
-        return true;
+        return object;
     }
 
 }
