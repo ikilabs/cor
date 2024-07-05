@@ -7,7 +7,7 @@
 You can install the package via npm:
 
 ```sh
-npm install cor-chain-of-responsibility
+npm install cor-ts
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ npm install cor-chain-of-responsibility
 First, define your business rules by implementing the BusinessRule interface. Each rule should define getName, getId, validate, and process methods.
 
 ```TypeScript
-import { BusinessRule } from 'cor-chain-of-responsibility';
+import { BusinessRule } from 'cor-ts';
 
 export class ToUpperCaseBR implements BusinessRule {
     getName(): string {
@@ -60,9 +60,7 @@ export class TrimBR implements BusinessRule {
 Create an instance of the CoR class and add your business rules to it:
 
 ```TypeScript
-import { CoR } from 'cor-chain-of-responsibility';
-import { ToUpperCaseBR } from './ToUpperCaseBR';
-import { TrimBR } from './TrimBR';
+import { CoR, ToUpperCaseBR, TrimBR } from 'cor-ts';
 
 const chain = new CoR();
 chain.addRule(new ToUpperCaseBR());
@@ -78,9 +76,7 @@ console.log(result); // Output: 'HELLO WORLD'
 If an object does not pass validation for a rule, the CoR class will throw an error:
 
 ```TypeScript
-import { CoR } from 'cor-chain-of-responsibility';
-import { ToUpperCaseBR } from './ToUpperCaseBR';
-import { TrimBR } from './TrimBR';
+import { CoR, ToUpperCaseBR, TrimBR } from 'cor-ts';
 
 const chain = new CoR();
 chain.addRule(new ToUpperCaseBR());
@@ -105,9 +101,7 @@ npm test
 Example test cases are provided in `src/CoR.test.ts.`
 
 ```TypeScript
-import { CoR } from './CoR';
-import { ToUpperCaseBR } from './ToUpperCaseBR';
-import { TrimBR } from './TrimBR';
+import { CoR, ToUpperCaseBR, TrimBR } from 'cor-ts';
 
 test('Chain of Responsibility with ToUpperCaseBR and TrimBR', () => {
     const chain = new CoR();
