@@ -13,7 +13,7 @@ npm install cor-ts
 ## Usage
 
 ### Defining Business Rules
-First, define your business rules by implementing the BusinessRule interface. Each rule should define getName, getId, validate, and process methods.
+First, define your business rules by implementing the BusinessRule interface. Each rule should define getName, getId, validate, and process methods. Note that the process method is asynchronous and should return a Promise.
 
 ```TypeScript
 import { BusinessRule } from 'cor-ts';
@@ -31,7 +31,7 @@ export class ToUpperCaseBR implements BusinessRule {
         return typeof object === 'string';
     }
 
-    process(object: any): object {
+    async process(object: any): Promise<object> {
         return object.toUpperCase();
     }
 }
@@ -49,7 +49,7 @@ export class TrimBR implements BusinessRule {
         return typeof object === 'string';
     }
 
-    process(object: any): object {
+    async process(object: any): Promise<object> {
         return object.trim();
     }
 }
@@ -57,18 +57,23 @@ export class TrimBR implements BusinessRule {
 
 ### Creating the Chain of Responsibility
 
-Create an instance of the CoR class and add your business rules to it:
+Create an instance of the CoR class and add your business rules to it. Remember to use await when calling the execute method.
 
 ```TypeScript
 import { CoR, ToUpperCaseBR, TrimBR } from 'cor-ts';
 
-const chain = new CoR();
-chain.addRule(new ToUpperCaseBR());
-chain.addRule(new TrimBR());
+async function run() {
+    const chain = new CoR();
+    chain.addRule(new ToUpperCaseBR());
+    chain.addRule(new TrimBR());
 
-const input = '   hello world   ';
-const result = chain.execute(input);
-console.log(result); // Output: 'HELLO WORLD'
+    const input = '   hello world   ';
+    const result = await chain.execute(input);
+    console.log(result); // Output: 'HELLO WORLD'
+}
+
+run().catch(console.error);
+
 ```
 
 ### Handling Validation Errors
@@ -84,7 +89,7 @@ chain.addRule(new TrimBR());
 
 try {
     const input = 12345;
-    const result = chain.execute(input);
+    const result = await chain.execute(input);
 } catch (error) {
     console.error(error.message); // Output: 'Validation failed for rule to_upper_case - ToUpperCaseBR'
 }
@@ -103,7 +108,7 @@ Example test cases are provided in `src/CoR.test.ts.`
 ```TypeScript
 import { CoR, ToUpperCaseBR, TrimBR } from 'cor-ts';
 
-test('Chain of Responsibility with ToUpperCaseBR and TrimBR', () => {
+test('Chain of Responsibility with ToUpperCaseBR and TrimBR', async () => {
     const chain = new CoR();
     const toUpperCaseRule = new ToUpperCaseBR();
     const trimRule = new TrimBR();
@@ -114,14 +119,16 @@ test('Chain of Responsibility with ToUpperCaseBR and TrimBR', () => {
     let testString = '   hello world   ';
     const expectedString = 'HELLO WORLD';
 
-    const result = chain.execute(testString);
+    const result = await chain.execute(testString);
 
     expect(result).toBe(expectedString);
 });
 
-test('Chain of Responsibility throws error for non-string input', () => {
+test('Chain of Responsibility throws error for non-string input', async () => {
     const chain = new CoR();
     const toUpperCaseRule = new ToUpperCaseBR();
+    const name = toUpperCaseRule.getName();
+    const id = toUpperCaseRule.getId();
     const trimRule = new TrimBR();
 
     chain.addRule(toUpperCaseRule);
@@ -129,10 +136,9 @@ test('Chain of Responsibility throws error for non-string input', () => {
 
     let testNumber = 12345;
 
-    expect(() => {
-        chain.execute(testNumber);
-    }).toThrowError(new Error(`Validation failed for rule to_upper_case - ToUpperCaseBR`));
+    await expect(chain.execute(testNumber)).rejects.toThrowError(new Error(`Validation failed for rule ${id} - ${name}`));
 });
+
 ```
 ## License
 

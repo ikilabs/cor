@@ -20,15 +20,15 @@ export class CoR {
      * Executes the chain of business rules on the given object.
      * 
      * @param {any} object - The object to process.
-     * @returns {any} The processed object.
+     * @returns {Promise<any>} The processed object.
      * @throws {Error} If validation fails for any rule.
      */
-    public execute(object: any): any {
+    public async execute(object: any): Promise<any> {
         for (const rule of this.rules) {
             if (!rule.validate(object)) {
                 throw new Error(`Validation failed for rule ${rule.getId()} - ${rule.getName()}`);
             }
-            object = rule.process(object);
+            object = await rule.process(object);
         }
         return object;
     }

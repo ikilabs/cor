@@ -39,7 +39,7 @@ export class TrimBR implements BusinessRule {
      * @param {any} object - The string to process.
      * @returns {object} The trimmed string.
      */
-    process(object: any): object {
+    process(object: any): Promise<object> {
         return object.trim();
     }
 }

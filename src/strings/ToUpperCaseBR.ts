@@ -39,7 +39,7 @@ export class ToUpperCaseBR implements BusinessRule {
      * @param {any} object - The string to process.
      * @returns {object} The upper case string.
      */
-    process(object: any): object {
+    process(object: any): Promise<object> {
         return object.toUpperCase();
     }
 }
