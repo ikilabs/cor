@@ -20,9 +20,9 @@ export interface BusinessRule {
      * Processes the given object according to the business rule.
      * 
      * @param {any} object - The object to process.
-     * @returns {object} The processed object.
+     * @returns {Promise<object>} The processed object.
      */
-    process(object: any): object;
+    process(object: any): Promise<object>;
 
     /**
      * Validates the given object to check if it meets the criteria of the business rule.

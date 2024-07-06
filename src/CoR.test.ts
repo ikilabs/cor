@@ -2,7 +2,7 @@ import { CoR } from './CoR';
 import { ToUpperCaseBR } from './strings/ToUpperCaseBR';
 import { TrimBR } from './strings/TrimBR';
 
-test('Chain of Responsibility with ToUpperCaseBR and TrimBR', () => {
+test('Chain of Responsibility with ToUpperCaseBR and TrimBR', async () => {
     const chain = new CoR();
     const toUpperCaseRule = new ToUpperCaseBR();
     const trimRule = new TrimBR();
@@ -13,13 +13,12 @@ test('Chain of Responsibility with ToUpperCaseBR and TrimBR', () => {
     let testString = '   hello world   ';
     const expectedString = 'HELLO WORLD';
 
-    const result = chain.execute(testString);
+    const result = await chain.execute(testString);
 
     expect(result).toBe(expectedString);
 });
 
-
-test('Chain of Responsibility throws error for non-string input', () => {
+test('Chain of Responsibility throws error for non-string input', async () => {
     const chain = new CoR();
     const toUpperCaseRule = new ToUpperCaseBR();
     const name = toUpperCaseRule.getName();
@@ -31,7 +30,5 @@ test('Chain of Responsibility throws error for non-string input', () => {
 
     let testNumber = 12345;
 
-    expect(() => {
-        chain.execute(testNumber);
-    }).toThrowError(new Error(`Validation failed for rule ${id} - ${name}`));
+    await expect(chain.execute(testNumber)).rejects.toThrowError(new Error(`Validation failed for rule ${id} - ${name}`));
 });
